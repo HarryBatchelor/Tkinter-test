@@ -99,7 +99,29 @@ class Questionnaire(Frame):
         lblProb2 = Label(self, text='Our team often experienced the following problems (Choose all that apply):')
         lblProb2.grid(row=8, column=1, columnspan=6, sticky=W)
 
+        self.varCB1 = IntVar()
+        CB1 = Checkbutton(self, text=" Poor Communcation", variable =self.varCB1)
+        CB1.grid(row = 9, column=0, columnspan = 4, sticky=W)
 
+        self.varCB2 = IntVar()
+        CB2 = Checkbutton(self, text=" Lack of Direction", variable =self.varCB2)
+        CB2.grid(row = 10, column=0, columnspan = 4, sticky=W)
+
+        self.varCB3 = IntVar()
+        CB3 = Checkbutton(self, text=" Disagreements Amongst Team", variable =self.varCB3)
+        CB3.grid(row = 11, column=0, columnspan = 4, sticky=W)
+
+        self.varCB4 = IntVar()
+        CB4 = Checkbutton(self, text=" Members Missing Meetings", variable =self.varCB4)
+        CB4.grid(row = 9, column=4, columnspan = 4, sticky=W)
+
+        self.varCB5 = IntVar()
+        CB5 = Checkbutton(self, text=" Members Not Contributing", variable =self.varCB5)
+        CB5.grid(row = 10, column=4, columnspan = 4, sticky=W)
+
+        self.varCB6 = IntVar()
+        CB6 = Checkbutton(self, text=" Members Not Motivated", variable =self.varCB6)
+        CB6.grid(row = 11, column=4, columnspan = 4, sticky=W)
 
 
 #Main
