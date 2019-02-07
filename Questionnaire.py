@@ -8,6 +8,9 @@ class Questionnaire(Frame):
         self.creatProgSelect()
         self.creatTeamExpQuest()
         self.creatProblems()
+        self.creatComments()
+        self.storeResponse()
+        self.clearResponse()
 
     def creatProgSelect(self):
         lblProg = Label(self, text='Degree Programme:', font=('MS', 8, 'bold'))
@@ -123,7 +126,50 @@ class Questionnaire(Frame):
         CB6 = Checkbutton(self, text=" Members Not Motivated", variable =self.varCB6)
         CB6.grid(row = 11, column=4, columnspan = 4, sticky=W)
 
+    def creatComments(self):
+        lblComment = Label(self, text='Comments about \n Teamwork:',font=('MS','8','bold'))
+        lblComment.grid(row=12, column=1, columnspan=1, sticky=W)
 
+        self.txtComment = Text(self, height = 3, width = 40)
+
+        scroll = Scrollbar(self, command=self.txtComment.yview)
+        self.txtComment.configure(yscrollcommand=scroll.set)
+
+        self.txtComment.grid(row=12, column=2, columnspan=5, sticky=E)
+        scroll.grid(row=12, column=7, sticky=W)
+
+        lblName = Label(self, text="Name (optional):", font=('MS','8','bold'))
+        lblName.grid(row = 15, column = 2, columnspan = 2, sticky = W)
+
+        self.entName = Entry(self)
+        self.entName.grid(row=15, column=4, columnspan=2, sticky=E)
+    def storeResponse(self):
+        butSubmit = Button(self, text="Submit", font=('MS','8','bold'))
+        butSubmit['command'] = self.storeResponse
+        butSubmit.grid(row=16, column=2, columnspan=2)
+
+
+    def clearResponse(self):
+
+        butClear = Button(self, text="Clear Form", font=('MS','8','bold'))
+        butClear['command'] = self.clearResponse
+        butClear.grid(row=16, column=3, columnspan=2)
+
+        self.listProg.selection_clear(0,END)
+        self.listProg.selection_set(END)
+
+        self.varQ1.set(0)
+        self.varQ2.set(0)
+        self.varQ3.set(0)
+        self.varCB1.set(0)
+        self.varCB2.set(0)
+        self.varCB3.set(0)
+        self.varCB4.set(0)
+        self.varCB5.set(0)
+        self.varCB6.set(0)
+
+        self.entName.delete(0,END)
+        self.txtComment.delete(1.0,END)
 #Main
 root = Tk()
 root.title("Teamwork Questionnaire")
