@@ -1,5 +1,5 @@
 from tkinter import *
-import tkMessageBox
+from tkinter import messagebox
 from Response import Response
 
 #GUI setup
@@ -200,8 +200,7 @@ class Questionnaire(Frame):
 
             tkMessageBox.showinfo("Questionnaire", "Questionnaire Submitted")
             self.clearResponse()
-        else:
-            tkMessageBox.showwarning("Entry Error", strMsg)
+        
 
 #Main
 root = Tk()
