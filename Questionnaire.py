@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import messagebox
+import tkinter.messagebox
 from Response import Response
 
 #GUI setup
@@ -13,7 +13,7 @@ class Questionnaire(Frame):
         self.creatComments()
         self.storeResponse()
         self.clearResponse()
-        self.submit()
+        self.createButtons()
 
     def creatProgSelect(self):
         lblProg = Label(self, text='Degree Programme:', font=('MS', 8, 'bold'))
@@ -146,9 +146,11 @@ class Questionnaire(Frame):
 
         self.entName = Entry(self)
         self.entName.grid(row=15, column=4, columnspan=2, sticky=E)
-    def submit(self):
+
+    def createButtons(self):
+
         butSubmit = Button(self, text="Submit", font=('MS','8','bold'))
-        butSubmit['command'] = self.submit
+        butSubmit['command'] = self.storeResponse
         butSubmit.grid(row=16, column=2, columnspan=2)
 
 
@@ -183,7 +185,7 @@ class Questionnaire(Frame):
             strMsg = "You need to select a Degree Programme."
 
         if (self.varQ1.get() == 0) or (self.varQ2.get() == 0) or(self.varQ3.get() == 0):
-            strMsg = strMsg + "You need to answer all Team Experience Questions"
+            strMsg = strMsg + " You need to answer all Team Experience Questions"
 
         if strMsg == "":
             import shelve
@@ -198,9 +200,11 @@ class Questionnaire(Frame):
             db[Ans.respNo] = Ans
             db.close
 
-            tkMessageBox.showinfo("Questionnaire", "Questionnaire Submitted")
+            tkinter.messagebox.showinfo("Questionnaire", "Questionnaire Submitted")
             self.clearResponse()
-        
+        else:
+            tkinter.messagebox.showwarning("Entry Error", strMsg)
+
 
 #Main
 root = Tk()
