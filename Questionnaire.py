@@ -1,4 +1,6 @@
 from tkinter import *
+import tkMessageBox
+from Response import Response
 
 #GUI setup
 class Questionnaire(Frame):
@@ -11,6 +13,7 @@ class Questionnaire(Frame):
         self.creatComments()
         self.storeResponse()
         self.clearResponse()
+        self.submit()
 
     def creatProgSelect(self):
         lblProg = Label(self, text='Degree Programme:', font=('MS', 8, 'bold'))
@@ -143,9 +146,9 @@ class Questionnaire(Frame):
 
         self.entName = Entry(self)
         self.entName.grid(row=15, column=4, columnspan=2, sticky=E)
-    def storeResponse(self):
+    def submit(self):
         butSubmit = Button(self, text="Submit", font=('MS','8','bold'))
-        butSubmit['command'] = self.storeResponse
+        butSubmit['command'] = self.submit
         butSubmit.grid(row=16, column=2, columnspan=2)
 
 
@@ -170,6 +173,36 @@ class Questionnaire(Frame):
 
         self.entName.delete(0,END)
         self.txtComment.delete(1.0,END)
+    def storeResponse(self):
+
+        index = self.listProg.curselection()[0]
+        strProg = str(self.listProg.get(index))
+        strMsg = ""
+
+        if strProg == "":
+            strMsg = "You need to select a Degree Programme."
+
+        if (self.varQ1.get() == 0) or (self.varQ2.get() == 0) or(self.varQ3.get() == 0):
+            strMsg = strMsg + "You need to answer all Team Experience Questions"
+
+        if strMsg == "":
+            import shelve
+            db = shelve.open('responsedb')
+
+            responseCount = len(db)
+            Ans = Response(str(responseCount+1), strProg,
+                            self.varQ1.get(), self.varQ2.get(), self.varQ3.get(),
+                            self.varCB1.get(), self.varCB2.get(), self.varCB3.get(),
+                            self.varCB4.get(), self.varCB5.get(), self.varCB6.get(),
+                            self.txtComment.get(1.0, END), self.entName.get())
+            db[Ans.respNo] = Ans
+            db.close
+
+            tkMessageBox.showinfo("Questionnaire", "Questionnaire Submitted")
+            self.clearResponse()
+        else:
+            tkMessageBox.showwarning("Entry Error", strMsg)
+
 #Main
 root = Tk()
 root.title("Teamwork Questionnaire")
