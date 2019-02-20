@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.messagebox
 from Response import Response
+from DisplayResults import *
 
 #GUI setup
 class Questionnaire(Frame):
@@ -14,6 +15,7 @@ class Questionnaire(Frame):
         self.storeResponse()
         self.clearResponse()
         self.createButtons()
+        self.openResultsWindow()
 
     def creatProgSelect(self):
         lblProg = Label(self, text='Degree Programme:', font=('MS', 8, 'bold'))
@@ -153,12 +155,15 @@ class Questionnaire(Frame):
         butSubmit['command'] = self.storeResponse
         butSubmit.grid(row=16, column=2, columnspan=2)
 
+        butORW = Button(self, text="Show results", font=('MS', '8','bold'))
+        butORW['command'] = self.openResultsWindow
+        butORW.grid(row=17, column=3, columnspan=2)
 
     def clearResponse(self):
 
         butClear = Button(self, text="Clear Form", font=('MS','8','bold'))
         butClear['command'] = self.clearResponse
-        butClear.grid(row=16, column=3, columnspan=2)
+        butClear.grid(row=16, column=4, columnspan=2)
 
         self.listProg.selection_clear(0,END)
         self.listProg.selection_set(END)
@@ -204,6 +209,11 @@ class Questionnaire(Frame):
             self.clearResponse()
         else:
             tkinter.messagebox.showwarning("Entry Error", strMsg)
+
+    def openResultsWindow(self):
+
+        t1 = Toplevel(root)
+        DisplayResults(t1)
 
 
 #Main
